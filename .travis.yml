@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t eml/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true eml/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t eml/multi-client ./client 
+  - docker build -t eml/multi-nginx ./nginx 
+  - docker build -t eml/multi-server ./server
+  - docker build -t eml/multi-worker ./worker
+
+  # Log in into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push eml/multi-client
+  - docker push eml/multi-nginx
+  - docker push eml/multi-server
+  - docker push eml/multi-worker
