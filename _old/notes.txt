@@ -1,0 +1,4 @@
+1. Separar tus entornos en su respectiva carpeta
+2. Crear los Dockerfiles.dev para el entorno de desarrollo
+3. Considerar el docker-compose para levantar todo el entorno con los servicios con un solo comando y archivo
+4. Visualizar los servicios que se necesitan y también los puertos y como redirigir las peticioness
